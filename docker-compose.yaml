@@ -1,0 +1,41 @@
+services:
+  cez-monitor:
+    build: .
+    image: cez-monitor:latest
+    container_name: cez-monitor
+
+    # Persistent volumes
+    volumes:
+      - ./data:/app/data  # config.yaml + seen_outages.sqlite
+      - ./logs:/app/logs  # Application logs
+
+    # Environment variables for Docker paths
+    environment:
+      - DATA_DIR=/app/data
+      - LOG_PATH=/app/logs/cez_monitor.log
+
+    # Run once and exit (recommended for cron-triggered execution)
+    restart: no
+
+    # Security
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /run
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -35,6 +35,50 @@ Vyplň `config.yaml` — viz komentáře v souboru.
 
 ---
 
+## Docker deployment
+
+### Prerequisites
+
+- Docker a Docker Compose nainstalované
+- `config.yaml` v adresáři `./data/`
+
+### Setup
+
+1. Vytvoř adresář pro data:
+
+```bash
+mkdir -p data logs
+cp config.example.yaml data/config.yaml
+```
+
+2. Vyplň `data/config.yaml` — viz komentáře v souboru.
+
+### Spuštění jedenkrát
+
+```bash
+docker compose up --build
+```
+
+Skript se spustí, provede kontrolu a kontejner se zastaví.
+
+### Cron v hostiteli (doporučeno)
+
+Přidej do crontabu hostitele:
+
+```cron
+0 8 * * 1 cd /path/to/cez-monitor && docker compose up --no-build
+```
+
+Skript se spustí v kontejneru každé pondělí v 08:00.
+
+### Persistent data
+
+- `./data/config.yaml` — konfigurace (nesdílej, není v gitu)
+- `./data/seen_outages.sqlite` — DB známých odstávek
+- `./logs/` — aplikační a cron logy
+
+---
+
 ## Zjištění RUIAN kódu obce
 
 ```bash

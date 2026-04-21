@@ -21,6 +21,8 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 
+import os
+
 SCRIPT_DIR = Path(__file__).parent
 PRAGUE_TZ = ZoneInfo("Europe/Prague")
 FINGERPRINT_VERSION = 3
@@ -32,9 +34,11 @@ BEZSTAVY_WEB = "https://www.bezstavy.cz"
 
 REQUEST_TIMEOUT = 15
 
-DB_PATH = SCRIPT_DIR / "seen_outages.sqlite"
-CONFIG_PATH = SCRIPT_DIR / "config.yaml"
-LOG_PATH = SCRIPT_DIR / "cez_monitor.log"
+# Paths — Docker-friendly (env override)
+DATA_DIR = Path(os.getenv("DATA_DIR", SCRIPT_DIR))
+DB_PATH = DATA_DIR / "seen_outages.sqlite"
+CONFIG_PATH = DATA_DIR / "config.yaml"
+LOG_PATH = Path(os.getenv("LOG_PATH", SCRIPT_DIR / "cez_monitor.log"))
 LOCK_PATH = Path("/tmp/cez-monitor.lock")
 
 USER_AGENT = "cez-monitor/1.0"
