@@ -1,0 +1,28 @@
+# Konfigurace cez-monitor
+# Zkopírujte tento soubor jako config.yaml a vyplňte hodnoty.
+# NIKDY necommitujte config.yaml do gitu — obsahuje tajné tokeny.
+
+telegram:
+  # Hlavní bot — posílá notifikace o nových odstávkách
+  bot_token: "123456789:ABCdefGHIjklMNOpqrSTUvwxYZ"
+  chat_id: "-1001234567890"
+
+  # Heartbeat bot — posílá potvrzení každého běhu a chybové zprávy.
+  # Může být jiný bot i jiný chat. Umožňuje oddělit "tiché" heartbeaty
+  # od "důležitých" notifikací o odstávkách.
+  heartbeat_bot_token: "987654321:ZYXwvuTSRqpONMlkjIHGfedCBA"
+  heartbeat_chat_id: "-1009876543210"
+
+# Seznam sledovaných obcí.
+# Kód (RUIAN) zjistíte příkazem: python3 resolve_towns.py <název_obce>
+obce:
+  - name: Těškovice
+    code: 512745
+  - name: Paskov
+    code: 559482
+  - name: Václavovice
+    code: 599964
+
+# Prodleva mezi dotazy na jednotlivé obce v sekundách.
+# Minimum 1, doporučeno 2. Nesnižujte pod 1 (viz CLAUDE.md §3.3).
+delay_between_requests: 2

@@ -1,0 +1,6 @@
+config.yaml
+*.sqlite
+*.log
+cron.log
+__pycache__/
+*.pyc
